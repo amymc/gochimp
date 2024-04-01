@@ -1,80 +1,34 @@
-// const grid = document.querySelector('.grid');
-// const scoreElement = document.querySelector('.score');
-// let score = 0;
-
-// function generateRandomState() {
-//     const states = ['empty', 'number', 'hidden'];
-//     return states[Math.floor(Math.random() * states.length)];
-// }
-
-// function createGrid() {
-//     for (let i = 0; i < 16; i++) {
-//         const cell = document.createElement('div');
-//         cell.classList.add('cell');
-//         const state = generateRandomState();
-//         cell.dataset.state = state;
-
-//         if (state === 'number') {
-//             cell.textContent = Math.floor(Math.random() * 9) + 1;
-//         }
-
-//         cell.addEventListener('click', handleCellClick);
-//         grid.appendChild(cell);
-//     }
-// }
-
-// function handleCellClick(e) {
-//     const cell = e.target;
-
-//     if (cell.dataset.state === 'number' || cell.dataset.state === 'hidden') {
-//         if (cell.dataset.state === 'number') {
-//             score++;
-//             scoreElement.textContent = score;
-//         } else {
-//             alert('Game Over!');
-//             resetGame();
-//         }
-//     }
-// }
-
-// function resetGame() {
-//     score = 0;
-//     scoreElement.textContent = score;
-//     grid.innerHTML = '';
-//     createGrid();
-// }
-
-// createGrid();
+let game = null;
 
 class Tile {
     constructor(btn, gameState) {
         this.gameState = gameState
         this.btn = btn
         this.unset()
+
+        this.btn.onclick = () => { this.select() }
     }
 
     unset() {
         this.number = -1
         this.state = "unset"
-        this.btn.textContent = ""
-        // TODO change UI element
+        this.btn.textContent = " "
     }
 
     set(number) {
         this.number = number
         this.state = "set"
         this.btn.textContent = number
-        // TODO change UI element
     }
 
     setAndHide(number) {
         this.set(number)
-        setTimeout(this.hide, 500) // ms
+        setTimeout(() => { this.hide() }, 500) // ms
     }
 
     hide() {
         this.state = "hidden"
-        // TODO change UI element
+        this.btn.textContent = " "
     }
 
     select() {
@@ -86,12 +40,13 @@ class Tile {
                 if (this.number === 1) {
                     this.gameState.incScore()
                     this.unset()
+                    this.gameState.hideTiles()
                     this.gameState.next()
                 }
 
                 /// incorrect tile clicked alert user to click the first tile to start game
                 else {
-                    // TODO: alert using UI
+                    alert("Start by pressing 1")
                 }
             }
         }
@@ -102,8 +57,11 @@ class Tile {
                 if (this.number === this.gameState.currentNumber) {
                     this.gameState.incScore()
                     this.unset()
-                    this.gameState.hideTiles()
                     this.gameState.next()
+                } else {
+                    this.gameState.hideTiles()
+                    alert("Game over! You scored " + this.gameState.score)
+                    game.reset()
                 }
             }
         }
@@ -111,13 +69,24 @@ class Tile {
 }
 
 class GameState {
-    constructor(leadingCount, max, score, startNumber) {
+    constructor(leadingCount, max, startNumber) {
         this.randomArray = new RandomArray(leadingCount, max)
-        this.score = score
+        this.score = 0
         this.max = max
         this.leadingNumber = startNumber
         this.currentNumber = startNumber
+        this.startNumber = startNumber
         this.tiles = []
+        this.scoreDiv = document.getElementById("score")
+    }
+    
+    reset() {
+        this.leadingNumber = this.startNumber
+        this.currentNumber = this.startNumber
+        this.tiles = []
+        this.randomArray.reset()
+        this.resetScore()
+        this.init()
     }
 
     init() {
@@ -139,14 +108,20 @@ class GameState {
         this.tiles[nextTileIndex].setAndHide(this.leadingNumber)
         this.leadingNumber += 1
     }
+    
+    resetScore() {
+        this.score = 0
+        this.scoreDiv.textContent = `Score: ${this.score}`
+    }
 
     incScore() {
         this.score += 1
-        // TODO: change UI element
+        this.currentNumber += 1
+        this.scoreDiv.textContent = `Score: ${this.score}`
     }
-    
+
     hideTiles() {
-        for (const tile in tiles) {
+        for (const tile of this.tiles) {
             if (tile.state === "set") {
                 tile.hide()
             }
@@ -156,10 +131,15 @@ class GameState {
 
 class RandomArray {
     constructor(length, max) {
-        this.length = length;
-        this.max = max;
-        this.array = [];
-        this.init();
+        this.length = length
+        this.max = max
+        this.array = []
+        this.init()
+    }
+    
+    reset() {
+        this.array = []
+        this.init()
     }
 
     init() {
@@ -178,6 +158,7 @@ class RandomArray {
         }
         this.array.shift();
         this.array.push(nextNumber);
+        return nextNumber;
     }
 
     getRandomNumber() {
@@ -186,5 +167,5 @@ class RandomArray {
 }
 
 // Usage example
-game = new GameState(5, 9, 0, 1)
+game = new GameState(5, 9, 1)
 game.init()
