@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.16/dist/tailwind.min.css" rel="stylesheet">
-    <title>Responsive Webpage</title>
+    <title>GoChimp: The Memory Game</title>
     <style>
         .tile {
-            @apply w-full h-0 shadow-lg pb-full rounded-xl box-border select-none bg-green-500
+            background: rgb(124, 205, 99)
         }
     </style>
 </head>
@@ -19,15 +19,15 @@
                 <label id="score" class="block text-sm font-medium text-gray-700">Score: 0</label>
             </div>
             <div id="grid" class="grid grid-cols-3 md:grid-cols-3 gap-1 md:gap-3">
-                <div class="tile">1</div>
-                <div class="tile">2</div>
-                <div class="tile">3</div>
-                <div class="tile">4</div>
-                <div class="tile">5</div>
-                <div class="tile">6</div>
-                <div class="tile">7</div>
-                <div class="tile">8</div>
-                <div class="tile">9</div>
+                <button class="shadow-md hover:shadow-lg p-8 rounded-lg border-b-2 border-r-2 border-gray-300 flex items-center justify-center w-full h-0 tile">1</button>
+                <button class="shadow-md hover:shadow-lg p-8 rounded-lg border-b-2 border-r-2 border-gray-300 flex items-center justify-center w-full h-0 tile">2</button>
+                <button class="shadow-md hover:shadow-lg p-8 rounded-lg border-b-2 border-r-2 border-gray-300 flex items-center justify-center w-full h-0 tile">3</button>
+                <button class="shadow-md hover:shadow-lg p-8 rounded-lg border-b-2 border-r-2 border-gray-300 flex items-center justify-center w-full h-0 tile">4</button>
+                <button class="shadow-md hover:shadow-lg p-8 rounded-lg border-b-2 border-r-2 border-gray-300 flex items-center justify-center w-full h-0 tile">5</button>
+                <button class="shadow-md hover:shadow-lg p-8 rounded-lg border-b-2 border-r-2 border-gray-300 flex items-center justify-center w-full h-0 tile">6</button>
+                <button class="shadow-md hover:shadow-lg p-8 rounded-lg border-b-2 border-r-2 border-gray-300 flex items-center justify-center w-full h-0 tile">7</button>
+                <button class="shadow-md hover:shadow-lg p-8 rounded-lg border-b-2 border-r-2 border-gray-300 flex items-center justify-center w-full h-0 tile">8</button>
+                <button class="shadow-md hover:shadow-lg p-8 rounded-lg border-b-2 border-r-2 border-gray-300 flex items-center justify-center w-full h-0 tile">9</button>
             </div>
         </div>
     </div>

@@ -21,11 +21,6 @@ class Tile {
         this.btn.textContent = number
     }
 
-    setAndHide(number) {
-        this.set(number)
-        setTimeout(() => { this.hide() }, 500) // ms
-    }
-
     hide() {
         this.state = "hidden"
         this.btn.textContent = " "
@@ -78,6 +73,7 @@ class GameState {
         this.startNumber = startNumber
         this.tiles = []
         this.scoreDiv = document.getElementById("score")
+        this.hideTile = null
     }
     
     reset() {
@@ -87,6 +83,7 @@ class GameState {
         this.randomArray.reset()
         this.resetScore()
         this.init()
+        this.hideTile = null
     }
 
     init() {
@@ -104,8 +101,14 @@ class GameState {
     }
 
     next() {
+        // hide the previously shown tile if it is set
+        if (this.hideTile !== null) {
+            this.hideTile.hide()
+        }
+
         const nextTileIndex = this.randomArray.next()
-        this.tiles[nextTileIndex].setAndHide(this.leadingNumber)
+        this.tiles[nextTileIndex].set(this.leadingNumber)
+        this.hideTile = this.tiles[nextTileIndex]
         this.leadingNumber += 1
     }
     
