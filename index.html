@@ -3,17 +3,48 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900" rel="stylesheet">    
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.16/dist/tailwind.min.css" rel="stylesheet">
     <title>GoChimp: The Memory Game</title>
     <style>
+        .barlow-thin {
+            font-family: "Barlow", sans-serif;
+            font-weight: 100;
+            font-style: normal;
+        }
         .tile {
             background: rgb(124, 205, 99)
         }
+        .background {
+            background-image: url(https://blog.zoombackground.io/media/posts/4/responsive/82abdc6c0818f80ada086fb1b912a62e-lg.jpg);
+            background-repeat: repeat;
+            /* width: 160px;
+            height: 70px; */
+        }
+
+        @keyframes shake {
+            0% { transform: rotate(0deg); }
+            25% { transform: rotate(5deg); }
+            50% { transform: rotate(-5deg); }
+            75% { transform: rotate(5deg); }
+            100% { transform: rotate(0deg); }
+        }
+
+        .shake {
+            animation: shake .5s infinite;
+            animation-timing-function: ease-in-out;     
+
+
+        }
+
+
     </style>
 </head>
 <body>
-    <div class="min-h-screen bg-gray-100 flex items-center justify-center">
-        <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
+    <div class="min-h-screen bg-gray-100 flex items-center justify-center barlow-thin background">
+        <div id="gamepad" class="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
             <h1 class="text-2xl font-bold mb-4">GoChimp</h1>
             <div class="mb-4">
                 <label id="score" class="block text-sm font-medium text-gray-700">Score: 0</label>
